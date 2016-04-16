@@ -1,0 +1,22 @@
+{
+  "name": "wallboarder-slack-event",
+  "description": "Slack outgoing webhook / Wallboarder middleware",
+  "author": "James Harding <james@jamesharding.me>",
+  "license": "MIT",
+  "repository": "https://github.com/hjamesw93/wallboarder-slack-event",
+  "main": "app.js",
+  "version": "0.1.0",
+  "engines": {
+    "node": "5.10.1"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0",
+    "forever": "^0.15.1",
+    "request": "^2.70.0"
+  },
+  "scripts": {
+    "start": "forever start server.js",
+    "stop": "forever stop server.js"
+  }
+}
