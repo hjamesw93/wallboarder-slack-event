@@ -13,18 +13,21 @@ app.use('/', router);
 server.listen(config.port, config.host);
 
 router.post('/', function(req, res) {
-    console.log(req.body);
     if (req.body.token === config.slackToken) {
-        var text = req.body.text;
+        var payload = {};
 
-        var mreg = new RegExp('/message:(.*)/');
-        console.log(text);
+        req.body.text.split("--").forEach(function(i) {
+            if (/message=(.*)/.test(i))  payload.message = i.match(/message=(.*)/)[1].trim();
+            else if (/wb=(.*)/.test(i)) payload.wb = i.match(/wb=(.*)/)[1].trim();
+        });
 
-        console.log(mreg.test(text));
-
-
-
-        res.json({text: "ok"});
+        if (payload.message) {
+            request.post({url:config.wbAPI + '/api/v1/event', form: payload}, function(err){
+                if (!err) res.json({text: "ok"});
+            });
+        } else {
+            res.json({text: "No message supplied!"});
+        }
     } else {
         res.json({text: "Access denied"});
     }

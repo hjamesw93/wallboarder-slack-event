@@ -6,5 +6,6 @@ const port = process.env.appPort || 3000;
 module.exports = {
     host: host,
     port: port,
-    slackToken: "<slack_token>"
+    slackToken: "<slack_token>",
+    wbAPI: "<Wallboarder API URL>"
 };
