@@ -14,5 +14,18 @@ server.listen(config.port, config.host);
 
 router.post('/', function(req, res) {
     console.log(req.body);
-    res.json({status: "ok"});
+    if (req.body.token === config.slackToken) {
+        var text = req.body.text;
+
+        var mreg = new RegExp('/message:(.*)/');
+        console.log(text);
+
+        console.log(mreg.test(text));
+
+
+
+        res.json({text: "ok"});
+    } else {
+        res.json({text: "Access denied"});
+    }
 });
