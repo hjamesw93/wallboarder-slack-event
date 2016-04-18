@@ -24,12 +24,15 @@ router.post('/', function(req, res) {
         });
 
         if (!payload.message) {
-            if (/wb-event ([a-zA-Z0-9].*)/.test(text))  payload.message = text.match(/message=(.*)/)[1].trim();
-            else res.json({text: "No message supplied!"});
-        } else {
+            if (/wb-event ([a-zA-Z0-9].*)/.test(text))  payload.message = text.match(/wb-event ([a-zA-Z0-9].*)/)[1].trim();
+        }
+
+        if (payload.message) {
             request.post({url:config.wbAPI + '/api/v1/event', form: payload}, function(err){
                 if (!err) res.json({text: "ok"});
             });
+        } else {
+            res.json({text: "No message supplied!"});
         }
     } else {
         res.json({text: "Access denied"});
